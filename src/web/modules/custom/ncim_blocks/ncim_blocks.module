@@ -1,0 +1,115 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for NCIM Blocks module.
+ */
+
+/**
+ * Implements hook_help().
+ */
+function ncim_blocks_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.ncim_blocks':
+      return '<p>' . t('Provides custom blocks for the NCIM homepage including Hero Section, Statistics Cards, News Section, and Partners Section.') . '</p>';
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function ncim_blocks_theme() {
+  return [
+    'ncim_hero_section' => [
+      'variables' => [
+        'title' => NULL,
+        'subtitle' => NULL,
+        'cta_text' => NULL,
+        'cta_url' => NULL,
+      ],
+    ],
+    'ncim_statistics_cards' => [
+      'variables' => [
+        'statistics' => [],
+      ],
+    ],
+    'ncim_news_section' => [
+      'variables' => [
+        'news_items' => [],
+      ],
+    ],
+    'ncim_partners_section' => [
+      'variables' => [
+        'partners' => [],
+      ],
+    ],
+    'social_media_footer_block' => [
+      'variables' => [
+        'social_links' => [],
+      ],
+    ],
+    'about_page_content' => [
+      'variables' => [
+        'content' => [],
+      ],
+    ],
+    'owners_individuals_content' => [
+      'variables' => [
+        'content' => [],
+      ],
+    ],
+    'government_entities_content' => [
+      'variables' => [
+        'content' => [],
+      ],
+    ],
+    'page_feedback' => [
+      'variables' => [
+        'content' => NULL,
+        'statistics' => NULL,
+      ],
+    ],
+    'news_list' => [
+      'variables' => [
+        'news_items' => [],
+        'total_count' => 0,
+        'current_page' => 0,
+      ],
+    ],
+    'rules_and_regulations' => [
+      'variables' => [
+        'content' => [],
+      ],
+    ],
+    'reports_content' => [
+      'variables' => [
+        'content' => [],
+      ],
+    ],
+    'privacy_content' => [
+      'variables' => [
+        'content' => [],
+      ],
+    ],
+    'freedom_content' => [
+      'variables' => [
+        'content' => [],
+      ],
+    ],
+    'support_content' => [
+      'variables' => [
+        'content' => [],
+      ],
+    ],
+    'sitemap_content' => [
+      'variables' => [
+        'sitemap_items' => [],
+      ],
+    ],
+    'faq_content' => [
+      'variables' => [
+        'content' => [],
+      ],
+    ],
+  ];
+}

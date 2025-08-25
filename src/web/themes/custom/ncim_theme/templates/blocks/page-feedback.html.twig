@@ -1,0 +1,117 @@
+{# Page Feedback Block Template #}
+
+<section>  
+  <form class="outer-container py-sm-3" id="feedbackForm" novalidate>
+    <div class="d-flex justify-content-between align-items-center gap-3 flex-wrap">
+      <div class="text-default d-flex gap-3 align-items-center">
+        <span>{{ content.field_feedback_question.value }}</span>
+        <div class="d-flex gap-3">
+          <button type="button" id="positiveFeedbackBtn" class="btn btn-primary">
+            {{ content.field_positive_button_text.value }}
+          </button>
+          <button type="button" id="negativeFeedbackBtn" class="btn btn-background-neutral-default px-3">
+            {{ content.field_negative_button_text.value }}
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <div id="positiveFeedback" class="fs-14 text-default d-block">
+          {% if statistics.total_submissions > 0 %}
+            {{ statistics.positive_percentage }}% {{ 'من المستخدمين قالوا نعم من'|t }} {{ statistics.total_submissions }} {{ 'تعليقًا'|t }}
+          {% else %}
+            {{ 'لا توجد تعليقات بعد'|t }}
+          {% endif %}
+        </div>
+
+        <button type="button" id="closeFeedbackBtn" class="btn d-flex gap-2 align-items-center d-none">
+          {{ content.field_close_button_text.value }}
+          <i class="fa-regular fa-circle-xmark"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="collapse" id="feedback">
+      <div class="mt-4">
+        <div class="row row-cols-lg-2">
+          <div>
+            <div class="text-secondary-paragraph mb-3">
+              <span class="fw-600 text-default">{{ content.field_reason_question_text.value }}</span>
+            </div>
+
+            <div class="invalid-feedback mb-3">{{ content.field_invalid_feedback_message.value }}</div>
+            
+            {# Feedback Reasons - Multiple values from unlimited text field #}
+            {% if content.field_feedback_reasons %}
+              {% for reason in content.field_feedback_reasons %}
+                {% if reason.value %}
+                  <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input reason-checkbox" 
+                           id="check{{ loop.index }}" name="reason" value="{{ reason.value }}" />
+                    <label class="form-check-label" for="check{{ loop.index }}">
+                      {{ reason.value }}
+                    </label>
+                  </div>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+            
+            <div class="invalid-feedback mb-3">{{ content.field_invalid_gender_message.value }}</div>
+
+            {# Gender Selection #}
+            <div class="d-flex align-items-baseline">
+              {{ content.field_gender_question_text.value }}
+              <div class="mb-3 ms-2">
+                <div class="mb-3">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="radio1" name="gender" value="male" required />
+                    <label class="form-check-label" for="radio1">
+                      {{ content.field_male_option_text.value }}
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="radio2" name="gender" value="female" required />
+                    <label class="form-check-label" for="radio2">
+                      {{ content.field_female_option_text.value }}
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="mb-3">
+              <label for="comment" class="form-label">{{ content.field_comment_label.value }}</label>
+              <textarea class="form-control" name="comment" id="comment" rows="3" 
+                        placeholder="{{ content.field_comment_placeholder.value }}" 
+                        maxlength="{{ content.field_comment_max_length_text.value }}"></textarea>
+              <div class="form-text">الحد الأقصى {{ content.field_comment_max_length_text.value }} حرف</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between gap-3 flex-wrap">
+          <div>
+            {{ content.field_additional_info_text.value }}
+            {% if content.field_participation_statement_li.0.url %}
+              <a href="{{ content.field_participation_statement_li.0.url }}" class="text-primary">
+                {{ content.field_participation_statement_te.value }}
+              </a>
+            {% endif %}
+            {% if content.field_subscription_rules_link.0.url %}
+              و <a href="{{ content.field_subscription_rules_link.0.url }}" class="text-primary">
+                {{ content.field_subscription_rules_text.value }}
+              </a>
+            {% endif %}
+          </div>
+          <div>
+            <button type="submit" class="btn btn-primary">
+              {{ content.field_submit_button_text.value }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>

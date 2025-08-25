@@ -1,0 +1,19 @@
+{#
+/**
+ * @file
+ * Template for footer column menu blocks.
+ * Maintains exact same styling as original footer.
+ */
+#}
+<div{{ attributes.addClass('footer-menu-block') }}>
+  {% if label %}
+    <h3 class="fs-18 fw-700 text-primary-paragraph">{{ label }}</h3>
+    <hr class="border-neutral-secondary border-2">
+  {% endif %}
+  
+  {% if content %}
+    <ul class="nav ps-0 d-flex flex-column">
+      {{ content }}
+    </ul>
+  {% endif %}
+</div>

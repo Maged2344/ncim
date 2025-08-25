@@ -1,0 +1,57 @@
+global-styling:
+  version: 1.x
+  css:
+    theme:
+      css/styles.css: {}
+  dependencies:
+    - core/drupal
+
+# Override Drupal's jQuery 4 with jQuery 3 for Owl Carousel compatibility
+jquery-compatible:
+  js:
+    libraries/jquery/jquery.min.js: {}
+  dependencies:
+    - core/drupal
+
+global-scripts:
+  version: 1.x
+  js:
+    js/main.js: {}
+    js/index.js: {}
+  dependencies:
+    - ncim_theme/jquery-compatible # Use our compatible jQuery instead of core/jquery
+    - core/drupal # Declare dependency on Drupal core's Drupal library
+
+owl-carousel:
+  css:
+    theme:
+      owlcarousel/dist/assets/owl.carousel.min.css: {}
+      owlcarousel/dist/assets/owl.theme.default.min.css: {}
+  js:
+    owlcarousel/dist/owl.carousel.min.js: {}
+  dependencies:
+    - ncim_theme/jquery-compatible
+    - core/drupal
+
+fontawesome:
+  css:
+    theme:
+      libraries/fontawesome/css/all.min.css: {}
+
+bootstrap5:
+  css:
+    theme:
+      libraries/bootstrap/bootstrap.min.css: {}
+  js:
+    libraries/bootstrap/bootstrap.bundle.min.js: {}
+
+accessibility-tools:
+  version: 1.x
+  css:
+    theme:
+      css/accessibility-tools.css: {}
+  js:
+    js/accessibility-tools.js: {}
+  dependencies:
+    - ncim_theme/jquery-compatible
+    - core/drupal

@@ -1,0 +1,38 @@
+{#
+/**
+ * @file
+ * Theme override for the html element.
+ *
+ * Available variables:
+ * - html_attributes: HTML attributes for the html element.
+ * - page_top: Initial rendered markup. This should be printed before the main
+ *   content.
+ * - page: The rendered page markup.
+ * - page_bottom: Closing rendered markup. This should be printed after the main
+ *   content.
+ * - db_offline: A flag indicating if the database is offline.
+ * - placeholder_token: The token for generating head, css, js and js-bottom
+ *   placeholders.
+ *
+ * @see template_preprocess_html()
+ *
+ * @ingroup themeable
+ */
+#}
+<!DOCTYPE html>
+<html{{ html_attributes }}>
+  <head>
+    <head-placeholder token="{{ placeholder_token }}">
+    <title>{{ head_title|safe_join(' | ') }}</title>
+    <css-placeholder token="{{ placeholder_token }}">
+    <js-placeholder token="{{ placeholder_token }}">
+  </head>
+  <body{{ attributes }}>
+    {#
+      Keyboard navigation/accessibility link to main content section in
+      page.html.twig.
+    #}
+    {{ page }}
+    <js-bottom-placeholder token="{{ placeholder_token }}">
+  </body>
+</html>

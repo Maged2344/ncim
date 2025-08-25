@@ -1,0 +1,14 @@
+{#
+/**
+ * @file
+ * Custom menu template for overview menu.
+ * Matches exact styling of original footer.
+ */
+#}
+{% for item in items %}
+  <li class="nav-item">
+    <a class="nav-link text-default text-primary-hover fw-400" href="{{ item.url }}">
+      {{ item.title }}
+    </a>
+  </li>
+{% endfor %}

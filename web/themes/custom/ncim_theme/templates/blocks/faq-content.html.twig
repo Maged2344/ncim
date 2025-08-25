@@ -1,0 +1,184 @@
+{#
+/**
+ * @file
+ * Theme implementation to display a FAQ block.
+ *
+ * Available variables:
+ * - content.faq_items: Array of FAQ items with question, answer, category, etc.
+ * - content.categories: Array of available categories for filtering.
+ *
+ * @see template_preprocess_faq_content()
+ */
+#}
+
+<section class="py-6">
+  <div class="outer-container">
+    <!-- Search and Filter Form -->
+    <form class="d-flex align-items-center gap-3 mb-6" id="faqSearchForm">
+      <div class="input-group w-fit isearch-input-groupn border border-field-border-default rounded-3">
+        <button class="btn border-0" type="button">
+          <img src="/{{ directory }}/images/icons/search.svg" alt="" srcset="">
+        </button>
+        <input type="text" 
+               class="form-control border-0" 
+               id="faqSearchInput"
+               placeholder="{{ 'بحث'|t }}" 
+               aria-label="{{ 'Example text with button addon'|t }}" 
+               aria-describedby="button-addon1">
+        <button class="btn border-0" type="button" id="voiceSearchBtn">
+          <img src="/{{ directory }}/images/icons/speech.svg" alt="" srcset="">
+        </button>
+      </div>
+
+      <button type="button" class="btn btn-default d-flex align-items-center gap-2" id="filterBtn">
+        <img src="/{{ directory }}/images/icons/filter.svg" alt="" srcset="">
+        {{ 'ترتيب'|t }}
+        <i class="fa-light fa-angle-down"></i>
+      </button>
+    </form>
+
+    <!-- Sort Dropdown (Hidden by default) -->
+    <div class="filter-dropdown mb-4 d-none" id="filterDropdown">
+      <div class="card p-3">
+        <h6 class="mb-3">{{ 'ترتيب الأسئلة'|t }}</h6>
+        <div class="d-flex flex-wrap gap-2">
+          <button type="button" class="btn btn-outline-primary btn-sm filter-category" data-category="newest">
+            {{ 'الأحدث أولاً'|t }}
+          </button>
+          <button type="button" class="btn btn-outline-primary btn-sm filter-category" data-category="oldest">
+            {{ 'الأقدم أولاً'|t }}
+          </button>
+          <button type="button" class="btn btn-outline-primary btn-sm filter-category" data-category="alphabetical">
+            {{ 'ترتيب أبجدي'|t }}
+          </button>
+          <button type="button" class="btn btn-outline-primary btn-sm filter-category" data-category="reverse-alphabetical">
+            {{ 'ترتيب أبجدي عكسي'|t }}
+          </button>
+          <button type="button" class="btn btn-outline-primary btn-sm filter-category" data-category="category">
+            {{ 'ترتيب حسب الفئة'|t }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nav Tabs -->
+    <ul class="nav nav-tabs faq-tabs" id="faqTabs" role="tablist">
+      {% for key, category in content.categories %}
+        <li class="nav-item" role="presentation">
+          <button class="nav-link{% if loop.first %} active{% endif %}" 
+                  id="{{ key }}-tab" 
+                  data-bs-toggle="tab" 
+                  data-bs-target="#{{ key }}" 
+                  type="button" 
+                  role="tab" 
+                  aria-controls="{{ key }}" 
+                  aria-selected="{% if loop.first %}true{% else %}false{% endif %}">
+            {{ category }}
+          </button>
+        </li>
+      {% endfor %}
+    </ul>
+
+    <!-- Tab Content -->
+    <div class="tab-content pt-3 px-md-3" id="faqTabsContent">
+      {% for key, category in content.categories %}
+        <div class="tab-pane fade{% if loop.first %} show active{% endif %}" 
+             id="{{ key }}" 
+             role="tabpanel" 
+             aria-labelledby="{{ key }}-tab">
+          
+          {% if key == 'all' %}
+            <!-- All FAQs Accordion -->
+            <div class="accordion accordion-flush" id="faqAccordion">
+              {% for item in content.faq_items %}
+                <div class="accordion-item faq-item" 
+                     data-id="{{ item.id }}"
+                     data-question="{{ item.question|lower }}" 
+                     data-answer="{{ item.answer|lower }}" 
+                     data-keywords="{{ item.search_keywords|lower }}" 
+                     data-category="{{ item.category }}">
+                  <h2 class="accordion-header" id="heading{{ item.id }}">
+                    <button class="accordion-button{% if not loop.first %} collapsed{% endif %}" 
+                            type="button" 
+                            data-bs-toggle="collapse" 
+                            data-bs-target="#collapse{{ item.id }}" 
+                            aria-expanded="{% if loop.first %}true{% else %}false{% endif %}" 
+                            aria-controls="collapse{{ item.id }}">
+                      {{ item.question }}
+                    </button>
+                  </h2>
+                  <div id="collapse{{ item.id }}" 
+                       class="accordion-collapse collapse{% if loop.first %} show{% endif %}" 
+                       aria-labelledby="heading{{ item.id }}" 
+                       data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                      {{ item.answer|raw }}
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <!-- Category-specific FAQs -->
+            <div class="accordion accordion-flush" id="faqAccordion{{ key|capitalize }}">
+              {% set category_items = content.faq_items|filter(item => item.category == key) %}
+              {% if category_items %}
+                {% for item in category_items %}
+                  <div class="accordion-item faq-item" 
+                       data-id="{{ item.id }}"
+                       data-question="{{ item.question|lower }}" 
+                       data-answer="{{ item.answer|lower }}" 
+                       data-keywords="{{ item.search_keywords|lower }}" 
+                       data-category="{{ item.category }}">
+                    <h2 class="accordion-header" id="heading{{ key }}{{ item.id }}">
+                      <button class="accordion-button collapsed" 
+                              type="button" 
+                              data-bs-toggle="collapse" 
+                              data-bs-target="#collapse{{ key }}{{ item.id }}" 
+                              aria-expanded="false" 
+                              aria-controls="collapse{{ key }}{{ item.id }}">
+                        {{ item.question }}
+                      </button>
+                    </h2>
+                    <div id="collapse{{ key }}{{ item.id }}" 
+                         class="accordion-collapse collapse" 
+                         aria-labelledby="heading{{ key }}{{ item.id }}" 
+                         data-bs-parent="#faqAccordion{{ key|capitalize }}">
+                      <div class="accordion-body">
+                        {{ item.answer|raw }}
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              {% else %}
+                <p>{{ 'لا توجد أسئلة في هذه الفئة حالياً.'|t }}</p>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section class="py-4">
+  <div class="outer-container">
+    <div class="card rounded-4 border-neutral-primary h-100">
+      <div class="card-body">
+        <div class="circle-icon-sm bg-background-brand-light mb-4">
+          <img src="/{{ directory }}/images/icons/mail.svg" alt="{{ 'question'|t }}">
+        </div>
+
+        <h5 class="fs-18 fw-700">
+          {{ 'التعليقات والاقتراحات'|t }}
+        </h5>
+        <p class="mb-4">{{ 'لأي استفسار أو ملاحظات حول الخدمات الحكومية، يرجى ملء المعلومات المطلوبة.'|t }}</p>
+
+        <a class="btn btn-primary" href="/contact-us.html" role="button">
+          {{ 'تواصل معنا'|t }}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

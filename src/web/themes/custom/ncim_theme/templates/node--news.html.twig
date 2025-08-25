@@ -1,0 +1,85 @@
+{#
+/**
+ * @file
+ * Theme override to display a single news node.
+ */
+#}
+
+<header class="news-header py-8">
+    <div class="outer-container">
+        {# Breadcrumbs #}
+        <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb d-flex">
+                <li class="breadcrumb-item">
+                    <a class="text-oncolor-secondary opacity-70" href="/news">{{ 'الأخبار والأحداث'|t }}</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('<current>') }}" class="text-white">{{ 'تفاصيل الخبر'|t }}</a>
+                </li>
+            </ol>
+        </nav>
+
+        {# News Title #}
+        <h2 class="fs-36 fw-700 text-default text-white mb-8">
+            {{ node.title.value }}
+        </h2>
+
+        {# News Meta Info #}
+        <div class="d-flex align-items-center text-primary-light gap-2">
+            {{ 'خبر'|t }}
+            <svg width="4" height="4" viewBox="0 0 4 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="2" cy="2" r="2" fill="#B8EACB"/>
+            </svg>
+            {% if node.field_news_date.value %}
+                {{ node.field_news_date.value|date('j F Y') }}
+            {% else %}
+                {{ node.created.value|date('j F Y') }}
+            {% endif %}
+        </div>
+    </div>
+</header>
+
+<section class="pt-4 pb-6">
+    <div class="outer-container">
+        {# News Summary #}
+        {% if node.field_summary.value %}
+            <div class="mb-4">
+                <p class="fs-18 fw-600 text-default">{{ node.field_summary.value }}</p>
+            </div>
+        {% endif %}
+
+        {# News Content #}
+        {% if node.field_news_content.value %}
+            <div class="news-content">
+                {{ node.field_news_content.value|raw }}
+            </div>
+        {% else %}
+            {# Fallback content if no content field #}
+            <p>{{ 'هنا يمكنك تضمين وصف موجز للعنوان في أربعة أسطر. هنا يمكنك تضمين وصف موجز للعنوان في أربعة أسطر.'|t }}</p>
+        {% endif %}
+
+        <hr class="hr-dashed border-icon-default-disabled">
+
+        {# News Tags #}
+        {% if node.field_tags.entity %}
+            <div class="d-flex gap-2 align-items-center">
+                <span class="badge p-2 bg-white text-success fs-12 fw-400 border border-1 border-border-success">{{ 'خبر'|t }}</span>
+                {% for tag_item in node.field_tags %}
+                    {% if tag_item.entity %}
+                        <span class="badge p-2 bg-white text-border-success fs-12 fw-400 border border-1 border-border-success">{{ tag_item.entity.name.value }}</span>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="d-flex gap-2 align-items-center">
+                <span class="badge p-2 bg-white text-success fs-12 fw-400 border border-1 border-border-success">{{ 'خبر'|t }}</span>
+                <span class="badge p-2 bg-white text-border-success fs-12 fw-400 border border-1 border-border-success">{{ 'الرياض'|t }}</span>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<div class="outer-container mt-4">
+    <div class="fw-400">{{ 'تاريخ آخر تعديل:'|t }} {{ node.changed.value|date('d/m/Y - g:i A') }} {{ 'بتوقيت السعودية'|t }}</div>
+</div>
+<hr class="mb-0">

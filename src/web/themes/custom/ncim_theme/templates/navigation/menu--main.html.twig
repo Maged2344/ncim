@@ -1,0 +1,120 @@
+{#
+/**
+ * @file
+ * Theme override to display the main menu.
+ *
+ * Available variables:
+ * - menu_name: The machine name of the menu.
+ * - items: An array of menu items. Each menu item contains:
+ *   - attributes: HTML attributes for the menu item.
+ *   - below: The menu item child items.
+ *   - title: The menu link title.
+ *   - url: The menu link url, instance of \Drupal\Core\Url
+ *   - localized_options: Menu link localized options.
+ *   - is_expanded: Whether the menu link is expanded.
+ *   - is_collapsed: Whether the menu link is collapsed.
+ *   - in_active_trail: Whether the menu link is in the active trail.
+ */
+#}
+<nav class="navbar navbar-expand-xl navbar-light bg-white">
+  <div class="outer-container d-flex align-items-center">
+    <!-- Logo -->
+    <a class="navbar-brand m-0" href="{{ path('<front>') }}">
+      <img src="/{{ base_path ~ directory }}/images/ncim.png" alt="{{ 'NCIM Logo'|t }}" title="{{ 'المركز الوطني لتفتيش والرقابة'|t }}" style="height:auto; max-height:60px;">
+    </a>
+
+    <!-- Toggler -->
+    <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Nav Links -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        {% for item in items %}
+          {% if item.below %}
+            <!-- Dropdown/Mega Menu Item -->
+            <li class="nav-item dropdown position-static">
+              <a class="nav-link gap-2" href="{{ item.url }}" id="navbarDropdown{{ loop.index }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ item.title }}
+                <img src="/{{ base_path ~ directory }}/images/icons/arrow_down.svg">
+              </a>
+              <ul class="dropdown-menu w-100 bg-white mega-menu" aria-labelledby="navbarDropdown{{ loop.index }}">
+                <div class="outer-container">
+                  <div class="row g-4 row-cols-4">
+                    {% for child in item.below %}
+                      <div>
+                        <h6 class="fw-bold px-3 mb-2 text-primary">{{ child.title }}</h6>
+                        {% if child.below %}
+                          {% for grandchild in child.below %}
+                            <a class="dropdown-item d-flex gap-3 align-items-center" href="{{ grandchild.url }}">
+                              {% if grandchild.icon is defined %}
+                                <img src="/{{ base_path ~ directory }}/images/icons/{{ grandchild.icon }}">
+                              {% elseif grandchild.description is defined %}
+                                <img src="/{{ base_path ~ directory }}/images/icons/{{ grandchild.description }}">
+                              {% else %}
+                                <img src="/{{ base_path ~ directory }}/images/icons/check.svg">
+                              {% endif %}
+                              <span>{{ grandchild.title }}</span>
+                            </a>
+                          {% endfor %}
+                        {% endif %}
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              </ul>
+            </li>
+          {% else %}
+            <!-- Regular Menu Item -->
+            <li class="nav-item">
+              <a class="nav-link{% if item.in_active_trail %} active{% endif %}" href="{{ item.url }}">{{ item.title }}</a>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+
+      <!-- Search Form -->
+      <div class="d-flex navbar-nav gap-3">
+        <button class="btn border-0" type="button" title="{{ 'Search'|t }}">
+          <img src="/{{ base_path ~ directory }}/images/icons/search.svg" alt="{{ 'Search'|t }}">
+        </button>
+        
+        <!-- Language Switcher -->
+        {% if languages is defined and languages|length >= 1 %}
+        <div class="dropdown">
+          <a class="nav-link" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ other_language_name|default('English'|t) }}
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {% for language in languages %}
+              {% if language.url %}
+                <li><a class="dropdown-item" href="{{ language.url }}">{{ language.name }}</a></li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+        
+        <!-- User Account Links -->
+        <div class="d-flex align-items-center">
+          {% if user.isAnonymous %}
+            <!-- Not logged in - Show Login/Register -->
+            <a href="{{ path('user.login') }}" class="btn btn-background-black-default me-2">{{ 'تسجيل الدخول'|t }}</a>
+          {% else %}
+            <!-- Logged in - Show User Menu -->
+            <div class="dropdown btn btn-background-black-default me-2">
+              <a class="nav-link dropdown-toggle text-light" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ user.displayname|default(user.name.value) }}
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                <li><a class="dropdown-item" href="{{ path('user.page') }}">{{ 'الملف الشخصي'|t }}</a></li>
+                <li><a class="dropdown-item" href="{{ path('user.logout') }}">{{ 'تسجيل الخروج'|t }}</a></li>
+              </ul>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

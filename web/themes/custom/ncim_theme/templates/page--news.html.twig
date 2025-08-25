@@ -1,0 +1,29 @@
+{#
+/**
+ * @file
+ * Theme override to display a single page for news.
+ */
+#}
+<div class="page-wrapper">
+  {% if page.breadcrumb %}
+    <div class="breadcrumb-wrapper">
+      {{ page.breadcrumb }}
+    </div>
+  {% endif %}
+
+  {# Main Content #}
+  <main role="main">
+    <div class="layout-container">
+      {% if page.content %}
+        {{ page.content }}
+      {% endif %}
+    </div>
+  </main>
+
+  {# Footer #}
+  {% if page.footer %}
+    <footer class="py-7 bg-neutral-50">
+      {{ page.footer }}
+    </footer>
+  {% endif %}
+</div>

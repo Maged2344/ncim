@@ -1,0 +1,46 @@
+{#
+/**
+ * @file
+ * Theme override to display a menu item.
+ *
+ * Available variables:
+ * - title: The menu link title.
+ * - url: The menu link url, instance of \Drupal\Core\Url
+ * - attributes: HTML attributes for the menu item.
+ * - below: The menu item child items.
+ * - in_active_trail: Whether the menu link is in the active trail.
+ */
+#}
+{% if below %}
+  <!-- Menu item with children (for mega menu) -->
+  <li class="nav-item dropdown position-static">
+    <a class="nav-link gap-2" href="{{ url }}" id="navbarDropdown{{ loop.index }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      {{ title }}
+      <img src="{{ base_path ~ directory }}/images/icons/arrow_down.svg">
+    </a>
+    <ul class="dropdown-menu w-100 bg-white mega-menu" aria-labelledby="navbarDropdown{{ loop.index }}">
+      <div class="outer-container">
+        <div class="row g-4 row-cols-4">
+          {% for child in below %}
+            <div>
+              <h6 class="fw-bold px-3 mb-2 text-primary">{{ child.title }}</h6>
+              {% if child.below %}
+                {% for grandchild in child.below %}
+                  <a class="dropdown-item d-flex gap-3 align-items-center" href="{{ grandchild.url }}">
+                      <img src="{{ base_path ~ directory }}/images/icons/{{ grandchild.attributes.icon }}">
+                    <span>{{ grandchild.title }}</span>
+                  </a>
+                {% endfor %}
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </ul>
+  </li>
+{% else %}
+  <!-- Regular menu item -->
+  <li class="nav-item">
+    <a class="nav-link{% if in_active_trail %} active{% endif %}" href="{{ url }}">{{ title }}</a>
+  </li>
+{% endif %}

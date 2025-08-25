@@ -1,0 +1,35 @@
+{#
+/**
+ * @file
+ * Theme override for breadcrumbs.
+ *
+ * Available variables:
+ * - breadcrumb: Array of breadcrumb items.
+ */
+#}
+
+{% if breadcrumb %}
+  <header class="common-header py-6">
+    <div class="outer-container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb d-flex">
+          {% for item in breadcrumb %}
+            <li class="breadcrumb-item{% if loop.last %} active{% endif %}">
+            {% if item.url and not loop.last %}
+              <a href="{{ item.url }}">{{ item.text|t }}</a>
+            {% else %}
+              {{ item.text|t }}
+            {% endif %}
+            </li>
+          {% endfor %}
+        </ol>
+      </nav>
+      
+      {% if breadcrumb|length > 0 %}
+        <h2 class="fs-36 fw-700 text-default">
+          {{ breadcrumb|last.text|t }}
+        </h2>
+      {% endif %}
+    </div>
+  </header>
+{% endif %}

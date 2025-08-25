@@ -1,0 +1,106 @@
+<section class="py-5">
+    <div class="outer-container">
+        <div class="d-flex justify-content-between gap-3 flex-wrap mb-4 rounded-4">
+            <h3 class="fs-24 fw-700">{{ 'كل الأخبار'|t }}</h3>
+            <div class="d-flex gap-3 align-items-center">
+                <button type="button" class="btn btn-outline-neutral-primary text-default d-flex align-items-center gap-2">
+                    {{ 'ترتيب حسب'|t }}
+                    <img src="/{{ directory }}/images/icons/sort-down.svg" alt="" srcset="">
+                </button>
+
+                <button type="button" class="btn btn-default d-flex align-items-center gap-2">
+                    <img src="/{{ directory }}/images/icons/filter.svg" alt="" srcset="">
+                    {{ 'تصفية'|t }}
+                    <i class="fa-light fa-angle-down"></i>
+                </button>
+            </div>
+        </div>
+
+        {% if news_items %}
+            <div class="row row-cols-xl-3 row-cols-md-2 g-4 mb-5">
+                {% for news in news_items %}
+                    <div>
+                        <div class="card bg-neutral-50 border-0 p-2 news-card rounded-4">
+                            <div class="card-body">
+                                <div class="news-card-image mb-4">
+                                    {% if news.image %}
+                                        <img src="{{ news.image }}" alt="{{ news.title }}">
+                                    {% else %}
+                                        <img src="/{{ directory }}/images/news-1.jpg" alt="{{ news.title }}">
+                                    {% endif %}
+                                </div>
+                                <h5 class="news-title fs-18 fw-700">{{ news.title }}</h5>
+                                <p class="news-desc fs-16 mb-4">
+                                    {% if news.summary %}
+                                        {{ news.summary }}
+                                    {% else %}
+                                        {{ 'هنا يمكنك تضمين وصف موجز للعنوان في أربعة أسطر. هنا يمكنك تضمين وصف موجز للعنوان في أربعة أسطر.'|t }}
+                                    {% endif %}
+                                </p>
+
+                                <a class="btn btn-primary" href="{{ news.url }}" role="button">
+                                    {{ 'قراءة المزيد'|t }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {# Pagination #}
+            {% if total_count > 6 %}
+                <div class="d-flex justify-content-center">
+                    <nav>
+                        <ul class="pagination align-items-center gap-2">
+                            {# Previous button #}
+                            <li class="page-item {% if current_page <= 0 %}disabled{% endif %}">
+                                <a class="page-link border-0" href="{% if current_page > 0 %}?page={{ current_page - 1 }}{% else %}#{% endif %}" aria-label="Previous">&lt;</a>
+                            </li>
+                            
+                            {# Page numbers #}
+                            {% set total_pages = (total_count / 6)|round(0, 'ceil') %}
+                            {% set human_current_page = current_page + 1 %}
+                            
+                            {# Show ellipsis if many pages #}
+                            {% if total_pages > 7 %}
+                                <li class="page-item">
+                                    <a class="page-link border-0" href="?page={{ total_pages - 1 }}">{{ total_pages }}</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link border border-secondary-subtle rounded" href="#">…</a>
+                                </li>
+                                
+                                {# Show current page and surrounding pages #}
+                                {% for page_num in range(max(1, human_current_page - 1), min(total_pages, human_current_page + 1)) %}
+                                    <li class="page-item {% if page_num == human_current_page %}active{% endif %}">
+                                        <a class="page-link border-0 {% if page_num == human_current_page %}text-success fw-bold{% endif %}" href="?page={{ page_num - 1 }}">
+                                            {{ page_num }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            {% else %}
+                                {# Show all pages if 7 or fewer #}
+                                {% for page_num in range(1, total_pages) %}
+                                    <li class="page-item {% if page_num == human_current_page %}active{% endif %}">
+                                        <a class="page-link border-0 {% if page_num == human_current_page %}text-success fw-bold{% endif %}" href="?page={{ page_num - 1 }}">
+                                            {{ page_num }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            {% endif %}
+                            
+                            {# Next button #}
+                            <li class="page-item {% if current_page >= total_pages - 1 %}disabled{% endif %}">
+                                <a class="page-link border-0" href="{% if current_page < total_pages - 1 %}?page={{ current_page + 1 }}{% else %}#{% endif %}" aria-label="Next">&gt;</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="text-center py-5">
+                <p class="fs-18 text-muted">{{ 'لا توجد أخبار متاحة حالياً'|t }}</p>
+            </div>
+        {% endif %}
+    </div>
+</section>

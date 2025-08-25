@@ -1,0 +1,4 @@
+# Page Feedback Block JavaScript
+page_feedback:
+  js:
+    js/page-feedback.js: {}

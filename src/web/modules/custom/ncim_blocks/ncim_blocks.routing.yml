@@ -1,0 +1,7 @@
+ncim_blocks.feedback_submit:
+  path: '/feedback/submit'
+  defaults:
+    _controller: '\Drupal\ncim_blocks\Controller\FeedbackController::submit'
+    _title: 'Submit Feedback'
+  requirements:
+    _permission: 'access content'

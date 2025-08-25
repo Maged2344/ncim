@@ -1,0 +1,132 @@
+{#
+/**
+ * @file
+ * Theme override to display the footer menu.
+ *
+ * Available variables:
+ * - items: List of menu items, each with the following properties:
+ *   - title: The link text.
+ *   - url: The link URL.
+ *   - below: Array of child menu items.
+ *   - attributes: HTML attributes for the menu item.
+ *   - is_expanded: Whether the menu item is expanded.
+ *   - is_collapsed: Whether the menu item is collapsed.
+ *   - in_active_trail: Whether the menu link is in the active trail.
+ */
+#}
+<footer class="py-7 bg-neutral-50">
+  <div class="outer-container">
+    <div class="row row-cols-lg-4 row-cols-md-2 mb-8 g-4">
+      {% for item in items %}
+        <div>
+          <h3 class="fs-18 fw-700 text-primary-paragraph">{{ item.title|t }}</h3>
+          <hr class="border-neutral-secondary border-2">
+          
+          {% if item.below %}
+            <!-- Menu item with children -->
+            <ul class="nav ps-0 d-flex flex-column">
+              {% for child in item.below %}
+                <li class="nav-item">
+                  {% if child.below %}
+                    <!-- Child has grandchildren - show as sub-section -->
+                    <h6 class="fw-bold mb-2 text-primary">{{ child.title|t }}</h6>
+                    <ul class="nav ps-3 d-flex flex-column">
+                      {% for grandchild in child.below %}
+                        <li class="nav-item">
+                          <a class="nav-link text-default text-primary-hover fw-400" href="{{ grandchild.url }}">
+                            {% if grandchild.attributes.class %}
+                              {% set classes = grandchild.attributes.class|split(' ') %}
+                              {% set icon_found = false %}
+                              {% for class in classes %}
+                                {% if class starts with 'fa-' and not icon_found %}
+                                  <!-- FontAwesome icon -->
+                                  <i class="{{ class }} me-2"></i>
+                                  {% set icon_found = true %}
+                                {% endif %}
+                              {% endfor %}
+                            {% endif %}
+                            {{ grandchild.title|t }}
+                          </a>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  {% else %}
+                    <!-- Regular child item -->
+                    <a class="nav-link text-default text-primary-hover fw-400" href="{{ child.url }}">
+                    {% if child.attributes.class %}
+                      {% set classes = child.attributes.class|split(' ') %}
+                      {% set icon_found = false %}
+                      {% for class in classes %}
+                        {% if class starts with 'fa-' and not icon_found %}
+                          <!-- FontAwesome icon -->
+                          <i class="{{ class }} me-2"></i>
+                          {% set icon_found = true %}
+                        {% endif %}
+                      {% endfor %}
+                    {% endif %}
+                    {{ child.title|t }}
+                    </a>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <!-- Menu item without children - show as direct link -->
+            <ul class="nav ps-0 d-flex flex-column">
+              <li class="nav-item">
+                <a class="nav-link text-default text-primary-hover fw-400" href="{{ item.url }}">
+                  {% if item.attributes.class %}
+                    {% set classes = item.attributes.class|split(' ') %}
+                    {% set icon_found = false %}
+                    {% for class in classes %}
+                      {% if class starts with 'fa-' and not icon_found %}
+                        <!-- FontAwesome icon -->
+                        <i class="{{ class }} me-2"></i>
+                        {% set icon_found = true %}
+                      {% endif %}
+                    {% endfor %}
+                  {% endif %}
+                  {{ item.title|t }}
+                </a>
+              </li>
+            </ul>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Bottom Links Section - Dynamic -->
+    {% set bottom_links = [] %}
+    {% for item in items %}
+      {% if item.attributes.is_bottom_link is defined and item.attributes.is_bottom_link %}
+        {% set bottom_links = bottom_links|merge([item]) %}
+      {% endif %}
+    {% endfor %}
+    
+    {% if bottom_links|length > 0 %}
+      <ul class="nav ps-0 mb-5">
+        {% for item in bottom_links %}
+          <li class="nav-item">
+            <a class="nav-link text-default text-primary-hover fw-400 text-decoration-underline" href="{{ item.url }}">
+              {{ item.title|t }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <!-- Copyright and Images Section -->
+    <div class="d-flex justify-content-sm-between justify-content-center flex-column flex-sm-row align-items-center flex-wrap gap-3">
+      <div>
+        <h4 class="fs-18 text-default fw-600">
+          {{ 'جميع الحقوق محفوظة للمركز الوطني للرقابة والتفتيش © @year'|t({'@year': "now"|date("Y")}) }}
+        </h4>
+        <div class="text-default">{{ 'تاريخ آخر تعديل: @date'|t({'@date': "now"|date("d/m/Y")}) }}</div>
+      </div>
+      <div class="d-flex gap-3 align-items-center">
+        <img src="{{ base_path ~ directory }}/images/Saudi_Vision.png" alt="{{ 'Saudi Vision'|t }}" title="{{ 'Saudi Vision'|t }}">
+        <img src="{{ base_path ~ directory }}/images/registered.png" alt="{{ 'Registered'|t }}">
+      </div>
+    </div>
+  </div>
+</footer>

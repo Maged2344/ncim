@@ -1,0 +1,211 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming in the NCIM theme.
+ */
+
+/**
+ * Implements hook_preprocess_HOOK() for navigation template.
+ */
+function ncim_theme_preprocess_includes_navigation(&$variables) {
+  // Add language switcher data to all pages
+  $languages = \Drupal::languageManager()->getLanguages();
+  $current_language = \Drupal::languageManager()->getCurrentLanguage();
+  
+  $variables['languages'] = [];
+  $variables['current_language_name'] = $current_language->getName();
+  
+  // Get current path for language switching
+  $current_path = \Drupal::service('path.current')->getPath();
+  
+  // Store the other language name for display in the button
+  $other_language = null;
+
+  foreach ($languages as $language_id => $language) {
+    // Create simple language switch URLs
+    $variables['languages'][] = [
+      'id' => $language_id,
+      'name' => $language->getName(),
+      'url' => '/' . $language_id . $current_path,
+    ];
+
+    if ($language_id !== $current_language->getId()) {
+      // Store the first other language for display
+      if ($other_language === null) {
+        $other_language = $language;
+      }
+    }
+  }
+  
+  // Set the other language name for the button
+  $variables['other_language_name'] = $other_language ? $other_language->getName() : 'English';
+
+  // Add user data
+  $variables['user'] = \Drupal::currentUser();
+  
+  // Debug: Add language count
+  $variables['debug_language_count'] = count($languages);
+  $variables['debug_current_language'] = $current_language->getId();
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for page template.
+ */
+function ncim_theme_preprocess_page(&$variables) {
+  // Add language switcher data to all pages
+  $languages = \Drupal::languageManager()->getLanguages();
+  $current_language = \Drupal::languageManager()->getCurrentLanguage();
+  
+  $variables['languages'] = [];
+  $variables['current_language_name'] = $current_language->getName();
+  
+  // Get current path for language switching
+  $current_path = \Drupal::service('path.current')->getPath();
+  
+  // Store the other language name for display in the button
+  $other_language = null;
+
+  foreach ($languages as $language_id => $language) {
+    // Create simple language switch URLs
+    $variables['languages'][] = [
+      'id' => $language_id,
+      'name' => $language->getName(),
+      'url' => '/' . $language_id . $current_path,
+    ];
+
+    if ($language_id !== $current_language->getId()) {
+      // Store the first other language for display
+      if ($other_language === null) {
+        $other_language = $language;
+      }
+    }
+  }
+  
+  // Set the other language name for the button
+  $variables['other_language_name'] = $other_language ? $other_language->getName() : 'English';
+
+  // Add user data
+  $variables['user'] = \Drupal::currentUser();
+  
+  // Debug: Add language count
+  $variables['debug_language_count'] = count($languages);
+  $variables['debug_current_language'] = $current_language->getId();
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for html template.
+ */
+function ncim_theme_preprocess_html(&$variables) {
+  // Add language switcher data to all pages
+  $languages = \Drupal::languageManager()->getLanguages();
+  $current_language = \Drupal::languageManager()->getCurrentLanguage();
+  
+  $variables['languages'] = [];
+  $variables['current_language_name'] = $current_language->getName();
+  
+  // Get current path for language switching
+  $current_path = \Drupal::service('path.current')->getPath();
+  
+  // Store the other language name for display in the button
+  $other_language = null;
+
+  foreach ($languages as $language_id => $language) {
+    // Create simple language switch URLs
+    $variables['languages'][] = [
+      'id' => $language_id,
+      'name' => $language->getName(),
+      'url' => '/' . $language_id . $current_path,
+    ];
+
+    if ($language_id !== $current_language->getId()) {
+      // Store the first other language for display
+      if ($other_language === null) {
+        $other_language = $language;
+      }
+    }
+  }
+  
+  // Set the other language name for the button
+  $variables['other_language_name'] = $other_language ? $other_language->getName() : 'English';
+
+  // Add user data
+  $variables['user'] = \Drupal::currentUser();
+  
+  // Debug: Add language count
+  $variables['debug_language_count'] = count($languages);
+  $variables['debug_current_language'] = $current_language->getId();
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for menu templates.
+ */
+function ncim_theme_preprocess_menu(&$variables) {
+  // Add language switcher data to menu templates
+  $languages = \Drupal::languageManager()->getLanguages();
+  $current_language = \Drupal::languageManager()->getCurrentLanguage();
+  
+  $variables['languages'] = [];
+  $variables['current_language_name'] = $current_language->getName();
+  
+  // Get current path for language switching
+  $current_path = \Drupal::service('path.current')->getPath();
+  
+  // Store the other language name for display in the button
+  $other_language = null;
+
+  foreach ($languages as $language_id => $language) {
+    // Create simple language switch URLs
+    $variables['languages'][] = [
+      'id' => $language_id,
+      'name' => $language->getName(),
+      'url' => '/' . $language_id . $current_path,
+    ];
+
+    if ($language_id !== $current_language->getId()) {
+      // Store the first other language for display
+      if ($other_language === null) {
+        $other_language = $language;
+      }
+    }
+  }
+
+  ncim_theme_add_menu_item_descriptions($variables['items']);
+  
+  // Set the other language name for the button
+  $variables['other_language_name'] = $other_language ? $other_language->getName() : 'English';
+
+  // Add user data
+  $variables['user'] = \Drupal::currentUser();
+  
+  // Debug: Add language count
+  $variables['debug_language_count'] = count($languages);
+  $variables['debug_current_language'] = $current_language->getId();
+}
+
+/**
+ * Add descriptions to menu items recursively.
+ */
+function ncim_theme_add_menu_item_descriptions(&$items) {
+  foreach ($items as &$item) {
+    if (!empty($item['original_link']) && $item['original_link']->getEntity()) {
+      $entity = $item['original_link']->getEntity();
+      $options = $item['original_link']->getOptions();
+
+      // If menu link has a description field
+      if ($entity->hasField('description') && !$entity->get('description')->isEmpty()) {
+        $item['description'] = $entity->get('description')->value;
+      }
+
+      // If 'icon' attribute exists, store it in item for Twig
+      if (!empty($options['attributes']['icon'])) {
+        $item['icon'] = $options['attributes']['icon'];
+      }
+    }
+
+    // Process children (recursively).
+    if (!empty($item['below'])) {
+      ncim_theme_add_menu_item_descriptions($item['below']);
+    }
+  }
+}

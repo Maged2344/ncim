@@ -1,0 +1,4 @@
+services:
+  ncim_blocks.feedback_statistics:
+    class: Drupal\ncim_blocks\Service\FeedbackStatisticsService
+    arguments: ['@entity_type.manager']

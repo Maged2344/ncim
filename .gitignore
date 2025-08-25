@@ -1,0 +1,94 @@
+# Drupal specific ignores
+# Ignore core when managing all of a project's dependencies with Composer
+# core
+
+# Ignore dependencies that are managed with Composer
+/vendor/
+
+# Ignore configuration files that may contain sensitive information
+sites/*/settings*.php
+sites/*/services*.yml
+sites/*/settings.local.php
+sites/*/services.local.yml
+
+# Ignore paths that contain user-generated content
+sites/*/files
+sites/*/private
+sites/*/translations
+
+# Ignore multi-site test environment
+sites/simpletest
+
+# Ignore Drupal cache and temporary files
+sites/*/cache
+sites/*/tmp
+sites/*/temp
+
+# Ignore log files
+sites/*/logs
+*.log
+
+# Ignore backup files
+*.bak
+*.backup
+*.sql
+*.sql.gz
+
+# Ignore environment-specific files
+.env
+.env.local
+.env.production
+.env.staging
+
+# Ignore IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Ignore OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Ignore Node.js dependencies (if using frontend build tools)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignore build artifacts
+dist/
+build/
+.sass-cache/
+
+# Ignore Composer files (optional - uncomment if you want to ignore)
+# composer.lock
+
+# Ignore DDEV specific files (uncomment if using DDEV)
+# .ddev/.env
+
+# Ignore test coverage reports
+coverage/
+*.coverage
+
+# Ignore PHPUnit cache
+.phpunit.result.cache
+
+# Ignore Drush cache
+.drush/
+
+# Ignore custom theme build files
+web/themes/custom/*/node_modules/
+web/themes/custom/*/dist/
+web/themes/custom/*/build/
+
+# Ignore custom module build files
+web/modules/custom/*/node_modules/
+web/modules/custom/*/dist/
+web/modules/custom/*/build/

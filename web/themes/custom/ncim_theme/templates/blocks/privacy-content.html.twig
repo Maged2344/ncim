@@ -1,0 +1,33 @@
+{#
+/**
+ * @file
+ * Default theme implementation for privacy policy content.
+ *
+ * Available variables:
+ * - content: An array of content data.
+ *   - sections: Array of privacy policy sections with title, content, section_order.
+ *
+ * @see template_preprocess_privacy_content()
+ */
+#}
+
+{% if content.sections %}
+  <section class="py-6">
+    <div class="outer-container">
+      {% for section in content.sections %}
+        <h5 class="fs-18 fw-700 mb-3">
+          {{ section.title }}
+        </h5>
+
+        <div class="mb-4">
+          {{ section.content|raw }}
+        </div>
+
+      {% endfor %}
+    </div>
+  </section>
+{% else %}
+  <div class="alert alert-info">
+    <p>{{ 'سياسة الخصوصية غير متاحة في الوقت الحالي.'|t }}</p>
+  </div>
+{% endif %}

@@ -1,0 +1,36 @@
+name: NCIM Theme
+type: theme
+base theme: false
+favicon: favicon.ico
+logo: favicon/favicon-32x32.png
+description: 'Custom theme for NCIM project with modern design'
+core_version_requirement: ^11
+libraries:
+  - ncim_theme/global-styling
+  - ncim_theme/jquery-compatible
+  - ncim_theme/global-scripts
+  - ncim_theme/owl-carousel
+  - ncim_theme/fontawesome
+  - ncim_theme/bootstrap5
+  - ncim_theme/accessibility-tools
+ckeditor5-stylesheets:
+  - css/styles.css
+  - libraries/bootstrap/bootstrap.min.css
+regions:
+  header: Header
+  primary_menu: 'Primary menu'
+  secondary_menu: 'Secondary menu'
+  page_top: 'Page top'
+  page_bottom: 'Page bottom'
+  highlighted: Highlighted
+  featured_top: 'Featured top'
+  breadcrumb: Breadcrumb
+  content: Content
+  sidebar_first: 'Sidebar first'
+  sidebar_second: 'Sidebar second'
+  footer: Footer
+  footer_column_1: 'Footer Column 1 - Overview'
+  footer_column_2: 'Footer Column 2 - Help & Support'
+  footer_column_3: 'Footer Column 3 - Important Links'
+  footer_column_4: 'Footer Column 4 - Social & Accessibility'
+  footer_bottom: 'Footer Bottom - Terms & Copyright'

@@ -1,0 +1,16 @@
+{#
+/**
+ * @file
+ * Template for important links menu block in footer column 3.
+ * Matches exact styling of original footer.
+ */
+#}
+<div{{ attributes.addClass('footer-important-links-section') }}>
+  <h3 class="fs-18 fw-700 text-primary-paragraph">{{ label|t }}</h3>
+  <hr class="border-neutral-secondary border-2">
+  {% if content %}
+    <ul class="nav ps-0 d-flex flex-column">
+      {{ content }}
+    </ul>
+  {% endif %}
+</div>

@@ -1,0 +1,14 @@
+{#
+/**
+ * @file
+ * Template for footer bottom links menu blocks.
+ * Maintains exact same styling as original footer.
+ */
+#}
+<div{{ attributes.addClass('footer-bottom-links-block') }}>
+  {% if content %}
+    <ul class="nav ps-0 mb-5">
+      {{ content }}
+    </ul>
+  {% endif %}
+</div>

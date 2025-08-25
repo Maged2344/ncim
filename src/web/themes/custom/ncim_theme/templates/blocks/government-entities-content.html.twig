@@ -1,0 +1,124 @@
+{# Owners and Individuals Page Content Block Template #}
+
+{# How We Serve Section #}
+<section id="howWeServe" class="py-6">
+  <div class="outer-container">
+    <h3 class="fs-30 fw-700 mb-3">
+      {{ content.page.how_we_serve.title }}
+    </h3>
+    <p class="fs-16 fw-500 mb-5">{{ content.page.how_we_serve.description }}</p>
+
+    <div class="px-2 px-sm-0">
+      <div class="d-flex flex-column flex-lg-row gap-3 align-items-lg-end pipeline">
+        {# Short card 1 #}
+        <div class="card bg-neutral-100 border-0 p-3 p-lg-4 hp-100 rounded-4 w-100 w-lg-fit">
+          <div class="card-body d-flex align-items-center justify-content-center">
+            <h5 class="m-0 fs-20 fw-700 text-center writing-mode">
+              {{ content.page.pipeline_cards.card_1.title }}
+            </h5>
+          </div>
+        </div>
+
+        {# Full height middle card 2 #}
+        <div class="card flex-fill align-self-stretch gradient-card p-md-4 p-2 border-0 rounded-4">
+          <div class="card-body bg-white rounded-4 p-3 p-xl-4">
+            {% if content.page.pipeline_cards.card_2.icon %}
+              <img src="{{ content.page.pipeline_cards.card_2.icon }}" 
+                   alt="{{ content.page.pipeline_cards.card_2.title }}"
+                   class="mb-5 mb-xl-8">
+            {% endif %}
+            <h4 class="fs-24 fw-700 text-default">{{ content.page.pipeline_cards.card_2.title }}</h4>
+            <p>{{ content.page.pipeline_cards.card_2.description }}</p>
+          </div>
+        </div>
+
+        {# Short card 3 #}
+        <div class="card bg-neutral-100 border-0 p-3 p-lg-4 hp-90 rounded-4 w-100 w-md-90 w-lg-fit">
+          <div class="card-body d-flex align-items-center justify-content-center">
+            <h5 class="m-0 fs-20 fw-700 text-center writing-mode">
+              {{ content.page.pipeline_cards.card_3.title }}
+            </h5>
+          </div>
+        </div>
+
+        {# Short card 4 #}
+        <div class="card bg-neutral-100 border-0 p-3 p-lg-4 hp-75 rounded-4 w-100 w-md-75 w-lg-fit">
+          <div class="card-body d-flex align-items-center justify-content-center">
+            <h5 class="m-0 fs-20 fw-700 text-center writing-mode">
+              {{ content.page.pipeline_cards.card_4.title }}
+            </h5>
+          </div>
+        </div>
+
+        {# Short card 5 #}
+        <div class="card bg-neutral-100 border-0 p-3 p-lg-4 hp-60 rounded-4 w-100 w-md-60 w-lg-fit">
+          <div class="card-body d-flex align-items-center justify-content-center">
+            <h5 class="m-0 fs-20 fw-700 text-center writing-mode">
+              {{ content.page.pipeline_cards.card_5.title }}
+            </h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# Beneficiaries Section #}
+<section class="py-10 bg-neutral-50 bg-glow">
+  <div class="outer-container">
+    <h3 class="fs-30 fw-700 mb-3">
+      {{ content.page.beneficiaries.title }}
+    </h3>
+    <p class="fs-16 fw-500 mb-5">{{ content.page.beneficiaries.description }}</p>
+
+    <div class="row row-cols-lg-3 row-cols-md-2 g-4">
+      {% for beneficiary in content.beneficiaries %}
+        <div>
+          <div class="card border-0 p-xl-4 p-3 rounded-4 h-100">
+            <div class="card-body d-flex flex-column gap-3 align-items-center justify-content-center">
+              <div class="circle-icon-lg bg-neutral-100 mb-3">
+                {% if beneficiary.icon %}
+                  <img src="{{ beneficiary.icon }}" 
+                       alt="{{ beneficiary.title }}"
+                       title="{{ beneficiary.title }}">
+                {% endif %}
+              </div>
+              <h5 class="fs-20 fw-700">{{ beneficiary.title }}</h5>
+              <p class="card-text mb-3">{{ beneficiary.description }}</p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{# Services Section #}
+<section class="py-8">
+  <div class="outer-container">
+    <div class="card card-bottom-pattern px-md-3 pt-md-3 px-xl-4 pt-xl-4 border-0 rounded-4 bg-primary-50">
+      <div class="card-body">
+        <div class="d-flex justify-content-between gap-3 flex-wrap flex-lg-nowrap">
+          <div class="flex-fill">
+            <h5 class="fs-30 fw-700 mb-3">{{ content.page.services.title }}</h5>
+            <p class="fs-16">{{ content.page.services.description }}</p>
+          </div>
+
+          <div class="flex-lg-shrink-0">
+            {% if content.page.services.button_url %}
+              <a class="btn btn-default d-flex gap-3 align-items-center"
+                 href="{{ content.page.services.button_url }}"
+                 role="button">
+                {{ content.page.services.button_text }}
+                <img src="/{{ directory }}/images/icons/arrow-link.svg" class="flip-ltr">
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <img src="/{{ directory }}/images/icons/saudi-pattern-v2.svg"
+           height="60"
+           class="object-fit-cover object-center pattern mt-4">
+    </div>
+  </div>
+</section>

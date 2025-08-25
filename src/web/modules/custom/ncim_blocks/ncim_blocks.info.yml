@@ -1,0 +1,12 @@
+name: NCIM Blocks
+type: module
+description: 'Provides custom blocks for NCIM homepage and reusable components'
+core_version_requirement: ^11
+package: Custom
+dependencies:
+  - drupal:block
+  - drupal:block_content
+  - drupal:field
+  - drupal:field_ui
+  - drupal:views
+  - drupal:node

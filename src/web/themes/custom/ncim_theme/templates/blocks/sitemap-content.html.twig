@@ -1,0 +1,49 @@
+{#
+/**
+ * @file
+ * Theme implementation to display a sitemap block.
+ *
+ * Available variables:
+ * - sitemap_items: Array of sitemap items with title, url, has_children, and children.
+ *
+ * @see template_preprocess_sitemap_content()
+ */
+#}
+
+<section class="py-6">
+  <div class="outer-container">
+    <ul class="nest-list d-flex flex-column gap-3">
+      {% for item in sitemap_items %}
+        <li{% if item.has_children %}{% else %} class="bullet-link"{% endif %}>
+          {% if item.has_children %}
+            {{ item.title }}
+            <ul class="bullet-link d-flex flex-column gap-3 mt-3">
+              {% for child in item.children %}
+                <li>
+                  <a href="{{ child.url }}" class="text-primary">
+                    {{ child.title }}
+                  </a>
+                  {% if child.has_children %}
+                    <ul class="bullet-link d-flex flex-column gap-3 mt-3">
+                      {% for grandchild in child.children %}
+                        <li>
+                          <a href="{{ grandchild.url }}" class="text-primary">
+                            {{ grandchild.title }}
+                          </a>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <a href="{{ item.url }}" class="text-primary">
+              {{ item.title }}
+            </a>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>

@@ -1,0 +1,45 @@
+{#
+/**
+ * @file
+ * Control bar template for weather, date, time, and location.
+ */
+#}
+<div class="bg-neutral-50 control-bar border border-neutral-primary border-bottom-1">
+  <div class="outer-container d-flex justify-content-between align-items-center">
+    <!-- Desktop layout -->
+    <div class="d-flex gap-4">
+      <div class="d-flex gap-2 align-items-center">
+        <img src="{{ base_path ~ directory }}/images/icons/wheather.svg" height="18" width="18" alt="weather" class="object-fit-contain" id="weather-icon">
+        <span class="text-primary-paragraph fs-14" id="weather-status"></span>
+      </div>
+      <div class="d-none d-md-flex gap-2 align-items-center">
+        <img src="{{ base_path ~ directory }}/images/icons/calender.svg" height="18" width="18" alt="calender" class="object-fit-contain">
+        <span class="text-primary-paragraph fs-14" id="date-time">{{ "now"|date("j-F-Y") }}</span>
+      </div>
+      <div class="d-none d-md-flex gap-2 align-items-center">
+        <img src="{{ base_path ~ directory }}/images/icons/clock.svg" height="18" width="18" alt="time" class="object-fit-contain">
+        <span class="text-primary-paragraph fs-14" id="time">{{ "now"|date("g:i A") }}</span>
+      </div>
+      <div class="d-none d-md-flex gap-2 align-items-center">
+        <img src="{{ base_path ~ directory }}/images/icons/location.svg" height="18" width="18" alt="location" class="object-fit-contain">
+        <span class="text-primary-paragraph fs-14" id="location"></span>
+      </div>
+    </div>
+
+    <!-- Desktop actions -->
+    <div class="d-flex gap-2">
+      <button class="control-btn btn accessibility-tool" data-action="toggle-visibility" title="{{ 'Toggle visibility'|t }}">
+        <img src="{{ base_path ~ directory }}/images/icons/eye.svg" alt="{{ 'eye'|t }}">
+      </button>
+      <button class="control-btn btn accessibility-tool" data-action="zoom-in" title="{{ 'Zoom in'|t }}">
+        <img src="{{ base_path ~ directory }}/images/icons/zoom_in.svg" alt="{{ 'zoom in'|t }}">
+      </button>
+      <button class="control-btn btn accessibility-tool" data-action="zoom-out" title="{{ 'Zoom out'|t }}">
+        <img src="{{ base_path ~ directory }}/images/icons/zoom_out.svg" alt="{{ 'zoom out'|t }}">
+      </button>
+      <button class="control-btn btn accessibility-tool" data-action="text-to-speech" title="{{ 'Voice input'|t }}">
+        <img src="{{ base_path ~ directory }}/images/icons/mic.svg" alt="{{ 'mic'|t }}">
+      </button>
+    </div>
+  </div>
+</div>

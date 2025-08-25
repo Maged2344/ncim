@@ -1,0 +1,323 @@
+{#
+/**
+ * @file
+ * Template for the About Page Content block.
+ *
+ * Available variables:
+ * - content: Array containing all the content sections.
+ */
+#}
+
+<section class="py-7">
+    <div class="outer-container">
+        <div class="d-flex gap-5 flex-row flex-wrap">
+            <div class="flex-shrink-0">
+                <ul class="nav flex-column ps-0 about-nav">
+                    {% if content.foundation %}
+                    <li class="nav-item">
+                        <a
+                            class="nav-link active"
+                            aria-current="page"
+                            href="#foundation"
+                        >{{ 'Foundation'|t }}</a>
+                    </li>
+                    {% endif %}
+                    {% if content.vision_mission %}
+                    <li class="nav-item">
+                        <a
+                            class="nav-link"
+                            href="#vision"
+                        >{{ 'Vision and Mission'|t }}</a>
+                    </li>
+                    {% endif %}
+                    {% if content.ceo_message %}
+                    <li class="nav-item">
+                        <a
+                            class="nav-link"
+                            href="#word"
+                        >{{ 'CEO Message'|t }}</a>
+                    </li>
+                    {% endif %}
+                    {% if content.strategic_goals %}
+                    <li class="nav-item">
+                        <a
+                            class="nav-link"
+                            href="#goals"
+                        >{{ 'Strategic Goals'|t }}</a>
+                    </li>
+                    {% endif %}
+                    {% if content.values %}
+                    <li class="nav-item">
+                        <a
+                            class="nav-link"
+                            href="#values"
+                        >{{ 'Values'|t }}</a>
+                    </li>
+                    {% endif %}
+                    {% if content.center_role %}
+                    <li class="nav-item">
+                        <a
+                            class="nav-link"
+                            href="#centerRole"
+                        >{{ 'Center Role'|t }}</a>
+                    </li>
+                    {% endif %}
+                    {% if content.missions %}
+                    <li class="nav-item">
+                        <a
+                            class="nav-link"
+                            href="#missions"
+                        >{{ 'Missions and Competencies'|t }}</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="col-xl container-fluid">
+                {% if content.foundation %}
+                <section id="foundation">
+                    <h4 class="fs-24 fw-700 text-default mb-3">{{ content.foundation.title }}</h4>
+                    {% if content.foundation.description %}
+                    <p class="text-secondary-paragraph">{{ content.foundation.description }}</p>
+                    {% endif %}
+
+                    {% if content.foundation.image %}
+                    <img
+                        src="{{ content.foundation.image }}"
+                        alt="{{ content.foundation.title }}"
+                        class="col-lg-10 img-fluid d-block mx-auto my-md-5 rounded-4"
+                    >
+                    {% endif %}
+                </section>
+                {% endif %}
+
+                {% if content.vision_mission %}
+                <section
+                    id="vision"
+                    class="py-8"
+                >
+                    <h4 class="fs-24 fw-700 text-default mb-3">{{ content.vision_mission.title }}</h4>
+                    {% if content.vision_mission.description %}
+                    <p class="text-secondary-paragraph mb-6">
+                        {{ content.vision_mission.description }}
+                    </p>
+                    {% endif %}
+
+                    <div class="row row-cols-lg-2 g-4">
+                        {% if content.vision_mission.vision.title %}
+                        <div>
+                            <div class="card h-100  p-md-4 p-2 border-0 rounded-4 vision-card">
+                                <div class="card-body bg-white rounded-4 p-3 p-xl-4">
+                                    <div class="icon mb-4">
+                                        <img
+                                            src="/{{ directory }}/images/icons/vision.svg"
+                                            alt="vision"
+                                        >
+                                    </div>
+                                    <h5 class="fs-24 fw-700 text-defualt mb-3">{{ content.vision_mission.vision.title }}</h5>
+
+                                    {% if content.vision_mission.vision.description %}
+                                    <p class="text-secondary-paragraph">{{ content.vision_mission.vision.description }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if content.vision_mission.mission.title %}
+                        <div>
+                            <div class="card h-100  p-md-4 p-2 border-0 rounded-4 vision-card">
+                                <div class="card-body bg-white rounded-4 p-3 p-xl-4">
+                                    <div class="icon mb-4">
+                                        <img
+                                            src="/{{ directory }}/images/icons/message.svg"
+                                            alt="mission"
+                                        >
+                                    </div>
+                                    <h5 class="fs-24 fw-700 text-defualt mb-3">{{ content.vision_mission.mission.title }}</h5>
+
+                                    {% if content.vision_mission.mission.description %}
+                                    <p class="text-secondary-paragraph">{{ content.vision_mission.mission.description }}</p>
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </section>
+                {% endif %}
+
+                {% if content.ceo_message %}
+                <section
+                    id="word"
+                    class="py-6"
+                >
+                    <h4 class="fs-24 fw-700 text-default mb-3">{{ content.ceo_message.title }}</h4>
+                    {% if content.ceo_message.description %}
+                    <p class="text-secondary-paragraph mb-6">
+                        {{ content.ceo_message.description }}
+                    </p>
+                    {% endif %}
+                    <div class="card border-0 bg-primary-50 px-md-3 pt-md-3 rounded-4 position-relative">
+                        <div class="d-flex flex-row">
+                            <div class="card-body col pb-8">
+
+                                <img
+                                    src="/{{ directory }}/images/icons/up-qoutaion.svg"
+                                    alt="quotation"
+                                >
+                                {% if content.ceo_message.message %}
+                                <p class="text-default mt-4 ps-4 ps-md-8 mb-2">
+                                    {{ content.ceo_message.message }}
+                                </p>
+                                {% endif %}
+                                <img
+                                    src="/{{ directory }}/images/icons/down-qoutaion.svg"
+                                    alt="quotation"
+                                    class="d-block ms-auto mb-5"
+                                >
+
+                                <div class="ps-4 ps-md-8">
+                                    {% if content.ceo_message.name %}
+                                    <h5 class="fs-18 fw-600">{{ content.ceo_message.name }}</h5>
+                                    {% endif %}
+                                    {% if content.ceo_message.position %}
+                                    <p>{{ content.ceo_message.position }}</p>
+                                    {% endif %}
+                                </div>
+
+                            </div>
+
+                            {% if content.ceo_message.image %}
+                            <div class="float-end col-lg-5 align-items-end z-1 d-none d-md-flex">
+                                <img
+                                    src="{{ content.ceo_message.image }}"
+                                    alt="CEO"
+                                    class="img-fluid"
+                                    id="ceo"
+                                >
+                            </div>
+                            {% endif %}
+
+                        </div>
+                        <img
+                            src="/{{ directory }}/images/icons/saudi-pattern-v2.svg"
+                            alt="pattern"
+                            class="img-fluid ps-4 position-md-absolute bottom-0 object-fit-cover pattern"
+                        >
+                    </div>
+                </section>
+                {% endif %}
+
+                {% if content.strategic_goals %}
+                <section
+                    id="goals"
+                    class="py-6"
+                >
+                    <h4 class="fs-24 fw-700 text-default mb-3">{{ content.strategic_goals.title }}</h4>
+                    {% if content.strategic_goals.description %}
+                    <p class="text-secondary-paragraph mb-6">
+                        {{ content.strategic_goals.description }}
+                    </p>
+                    {% endif %}
+
+                    {% if content.strategic_goals.goals %}
+                    <ol class="item-list d-flex flex-column gap-4 ps-0">
+                        {% set goals = content.strategic_goals.goals|split('\n') %}
+                        {% for goal in goals %}
+                            {% if goal|trim %}
+                            <li>{{ goal|trim }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ol>
+                    {% endif %}
+                </section>
+                {% endif %}
+
+                {% if content.values %}
+                <section
+                    id="values"
+                    class="py-6"
+                >
+                    <div class="outer-container">
+                        <h4 class="fs-24 fw-700 text-default mb-3">{{ content.values.title }}</h4>
+                        {% if content.values.description %}
+                        <p class="text-secondary-paragraph mb-6">
+                            {{ content.values.description }}
+                        </p>
+                        {% endif %}
+
+                        {% if content.values.values_list %}
+                        <div class="row g-4 mb-xl-4">
+                            {% for value in content.values.values_list %}
+                            <div class="col-md-6 col-xl">
+                                <div class="card border-0 bg-neutral-50 rounded-4 p-xl-3">
+                                    <div class="card-body d-flex flex-column gap-3 justify-content-center gap-4 align-items-center">
+                                        {% if value.icon %}
+                                        <div class="circle-icon bg-neutral-100 text-primary overflow-hidden">
+                                            <img
+                                                src="{{ value.icon }}"
+                                                alt="{{ value.title }}"
+                                                loading="lazy"
+                                            >
+                                        </div>
+                                        {% endif %}
+                                        {% if value.title %}
+                                        <h5 class="fs-18 fw-600">{{ value.title }}</h5>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+
+                    </div>
+                </section>
+                {% endif %}
+
+                {% if content.center_role %}
+                <section
+                    id="centerRole"
+                    class="py-6"
+                >
+                    <div class="outer-container">
+                        <h4 class="fs-24 fw-700 text-default mb-3">{{ content.center_role.title }}</h4>
+                        {% if content.center_role.description %}
+                        <p class="text-secondary-paragraph">
+                            {{ content.center_role.description }}
+                        </p>
+                        {% endif %}
+                    </div>
+                </section>
+                {% endif %}
+
+                {% if content.missions %}
+                <section
+                    id="missions"
+                    class="py-6"
+                >
+                    <div class="outer-container">
+                        <h4 class="fs-24 fw-700 text-default mb-3">{{ content.missions.title }}</h4>
+                        {% if content.missions.description %}
+                        <p class="text-secondary-paragraph mb-6">
+                            {{ content.missions.description }}
+                        </p>
+                        {% endif %}
+
+                        {% if content.missions.missions_list %}
+                        <ul class="dot-list d-flex flex-column gap-3 ps-0">
+                            {% set missions = content.missions.missions_list|split('\n') %}
+                            {% for mission in missions %}
+                                {% if mission|trim %}
+                                <li>{{ mission|trim }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                </section>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>

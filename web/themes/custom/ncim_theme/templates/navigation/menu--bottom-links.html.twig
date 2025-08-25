@@ -1,0 +1,14 @@
+{#
+/**
+ * @file
+ * Custom menu template for bottom links menu.
+ * Matches exact styling of original footer with underline decoration.
+ */
+#}
+{% for item in items %}
+  <li class="nav-item">
+    <a class="nav-link text-default text-primary-hover fw-400 text-decoration-underline" href="{{ item.url }}">
+      {{ item.title }}
+    </a>
+  </li>
+{% endfor %}

@@ -1,0 +1,23 @@
+{#
+/**
+ * @file
+ * Theme override to display the front page.
+ *
+ * This is the template that displays the front page.
+ */
+#}
+
+{# Include the control bar and navigation #}
+{% include '@ncim_theme/includes/control-bar.html.twig' %}
+
+{% if page.primary_menu %}
+    <div class="primary-wrapper">
+      {{ page.primary_menu }}
+    </div>
+{% endif %}
+
+{# Main content area where blocks will be placed #}
+{{ page.content }}
+
+{# Include the footer #}
+{% include '@ncim_theme/includes/footer-regions.html.twig' %}
